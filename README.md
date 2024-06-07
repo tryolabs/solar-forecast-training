@@ -6,7 +6,7 @@ The model was trained using the [ml-garden](https://github.com/tryolabs/ml-garde
 
 # Installation
 
-To train the model the ml-garden library needs to be installed using `poetry`. For instructions on how to install `poetry` can be, please refer to the [poetry documentation](https://python-poetry.org/docs/#installing-with-pipx). Additionally we need to install `XGBoost`, which is the model used for training.
+To train the model the ml-garden library needs to be installed using `poetry`. For instructions on how to install `poetry`, please refer to the [poetry documentation](https://python-poetry.org/docs/#installing-with-pipx). Additionally we need to install `XGBoost`, which is the model used for training.
 
 Use the following lines of code to install the needed packages and set the environment.
 
