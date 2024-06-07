@@ -1,1 +1,1 @@
-# ocf-solar-prediction
+# solar-training-pipeline
