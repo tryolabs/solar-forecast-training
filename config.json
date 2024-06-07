@@ -1,0 +1,264 @@
+{
+    "pipeline": {
+        "name": "XGBoostTrainingPipeline",
+        "description": "Training pipeline for XGBoost models.",
+        "parameters": {
+            "save_data_path": "ocf_pipeline.pkl",
+            "target": "average_power_kw",
+            "columns_to_ignore_for_training": [
+                "ss_id",
+                "date"
+            ]
+        },
+        "steps": [
+            {
+                "step_type": "GenerateStep",
+                "parameters": {
+                    "train_path": "data/trainset_new.parquet",
+                    "test_path": "data/testset_forecast.parquet",
+                    "predict_path": "data/testset_forecast.parquet",
+                    "drop_columns": [
+                        "operational_at",
+                        "total_energy_kwh",
+                        "terrestrial_radiation",
+                        "shortwave_radiation",
+                        "direct_normal_irradiance"
+                    ]
+                }
+            },
+            {
+                "step_type": "TabularSplitStep",
+                "parameters": {
+                    "train_percentage": 0.95,
+                    "group_by_columns": [
+                        "ss_id"
+                    ]
+                }
+            },
+            {
+                "step_type": "CleanStep",
+                "parameters": {
+                    "filter": {
+                        "is_day": "is_day != 0"
+                    },
+                    "drop_na_columns": [
+                        "average_power_kw",
+                        "diffuse_radiation"
+                    ],
+                    "drop_ids": {
+                        "ss_id": [
+                            6656,
+                            3074,
+                            6663,
+                            6667,
+                            7184,
+                            3093,
+                            6682,
+                            10791,
+                            5177,
+                            6721,
+                            7750,
+                            6732,
+                            3149,
+                            13388,
+                            6748,
+                            2657,
+                            13415,
+                            7276,
+                            7292,
+                            7295,
+                            3208,
+                            6800,
+                            7312,
+                            5780,
+                            26777,
+                            26778,
+                            7835,
+                            26782,
+                            26788,
+                            7846,
+                            6826,
+                            26795,
+                            26800,
+                            3250,
+                            26803,
+                            26805,
+                            26807,
+                            7865,
+                            6843,
+                            6846,
+                            6336,
+                            26819,
+                            3270,
+                            26822,
+                            26825,
+                            6865,
+                            2770,
+                            7383,
+                            3288,
+                            6872,
+                            6877,
+                            26845,
+                            6880,
+                            6881,
+                            26849,
+                            3811,
+                            6372,
+                            26853,
+                            26856,
+                            26858,
+                            26859,
+                            6380,
+                            26860,
+                            3311,
+                            6896,
+                            26865,
+                            6898,
+                            26867,
+                            6902,
+                            3323,
+                            3324,
+                            3326,
+                            26887,
+                            6409,
+                            6927,
+                            2832,
+                            2834,
+                            26899,
+                            10004,
+                            26902,
+                            6424,
+                            3865,
+                            7448,
+                            17693,
+                            10531,
+                            6949,
+                            6952,
+                            6953,
+                            7469,
+                            6446,
+                            7471,
+                            26925,
+                            26926,
+                            26936,
+                            26939,
+                            26941,
+                            4421,
+                            11590,
+                            4422,
+                            6981,
+                            26951,
+                            6994,
+                            2902,
+                            5974,
+                            6490,
+                            6491,
+                            6493,
+                            26974,
+                            26976,
+                            26978,
+                            12644,
+                            6503,
+                            26985,
+                            26989,
+                            3951,
+                            3952,
+                            7025,
+                            26991,
+                            26998,
+                            27000,
+                            27002,
+                            10619,
+                            2940,
+                            27003,
+                            27006,
+                            6527,
+                            7551,
+                            6021,
+                            27016,
+                            7050,
+                            27019,
+                            3472,
+                            3476,
+                            7060,
+                            7062,
+                            27038,
+                            27046,
+                            3496,
+                            27048,
+                            7595,
+                            27051,
+                            27055,
+                            9648,
+                            6577,
+                            7088,
+                            7090,
+                            27059,
+                            4033,
+                            8648,
+                            6602,
+                            7114,
+                            7119,
+                            3536,
+                            3026,
+                            6611,
+                            7124,
+                            6614,
+                            6621,
+                            11752,
+                            6126,
+                            7159,
+                            4090,
+                            4092
+                        ]
+                    }
+                }
+            },
+            {
+                "step_type": "CalculateFeaturesStep",
+                "parameters": {
+                    "datetime_columns": [
+                        "date"
+                    ],
+                    "features": [
+                        "month",
+                        "day",
+                        "hour"
+                    ]
+                }
+            },
+            {
+                "step_type": "EncodeStep",
+                "parameters": {}
+            },
+            {
+                "step_type": "ModelStep",
+                "parameters": {
+                    "model_class": "XGBoost",
+                    "model_parameters": {
+                        "max_depth": 15,
+                        "eta": 0.03932150362959542,
+                        "objective": "reg:squarederror",
+                        "eval_metric": "mae",
+                        "n_jobs": -1,
+                        "n_estimators": 2288,
+                        "min_child_weight": 1,
+                        "subsample": 0.8885899409499547,
+                        "colsample_bytree": 0.8439451149438386,
+                        "early_stopping_rounds": 20,
+                        "tree_method": "hist"
+                    }
+                }
+            },
+            {
+                "step_type": "CalculateMetricsStep"
+            },
+            {
+                "step_type": "ExplainerDashboardStep",
+                "parameters": {
+                    "enable_step": false
+                }
+            }
+        ]
+    }
+}
