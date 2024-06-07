@@ -51,7 +51,7 @@ Note, that no data was removed from the dataframe in this step. This analysis wa
 
 # Train Model
 
-The configuration file `config.json` provides the training parameters for the final model that is deployed. More details on how to setup a configuration file, please refer to the [documentation of ml-garden](https://github.com/tryolabs/ml-garden/blob/main/documentation/user_guide.md). To train the model with the provided `config.json`, run the script
+The configuration file `config.json` provides the training parameters for the final model that is deployed. For more details on how to setup a configuration file, please refer to the [documentation of ml-garden](https://github.com/tryolabs/ml-garden/blob/main/documentation/user_guide.md). To train the model with the provided `config.json`, run the script
 
 ```
 python3 run_training.py
