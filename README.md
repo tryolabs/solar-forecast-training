@@ -4,6 +4,22 @@ This repository contains the tools needed to train a model for solar energy pred
 
 The model was trained using the [ml-garden](https://github.com/tryolabs/ml-garden) library which was developed during this project.
 
+# Installation
+
+To train the model the ml-garden library needs to be installed using `poetry`. For instructions on how to install `poetry` can be, please refer to the [poetry documentation](https://python-poetry.org/docs/#installing-with-pipx). Additionally we need to install `XGBoost`, which is the model used for training.
+
+Use the following lines of code to install the needed packages and set the environment.
+
+```
+poetry init
+
+poetry add git+ssh://git@github.com:tryolabs/ml-garden.git
+
+poetry add xgboost
+
+poetry shell
+```
+
 # Data
 
 The training data was downloaded from [open-meteo](https://open-meteo.com/). More specifically, hourly forecast data of the [historical weather API](https://open-meteo.com/en/docs/historical-weather-api) was used. The time period is restricted by the availabilty of the target solar enegery data of the panels and covers the time between 2018 and 2021. Additional information about the time, location and specifics about the panel are used. The weather features used are listed below, with the description given by open-meteo.
@@ -24,22 +40,6 @@ The training data was downloaded from [open-meteo](https://open-meteo.com/). Mor
 - Diffusive Solar Radiation DHI (W/m2): Diffuse solar radiation as average of the preceding hour
 
 The data was downloaded and transformed into a dataframe. The [training](https://drive.google.com/file/d/16b35aP2ML96-8B8CZ1KMjJxrUvAyS6LV/view?usp=sharing) and the [test](https://drive.google.com/file/d/1hYCsWnVWMsKujR-qBIjLlvW2rbPHeftE/view?usp=sharing) dataset are stored as `.parquet` files.
-
-# Installation
-
-To train the model the ml-garden library needs to be installed using `poetry`. For instructions on how to install `poetry` can be, please refer to the [poetry documentation](https://python-poetry.org/docs/#installing-with-pipx). Additionally we need to install `XGBoost`, which is the model used for training.
-
-Use the following lines of code to install the needed packages and set the environment.
-
-```
-poetry init
-
-poetry add git+ssh://git@github.com:tryolabs/ml-garden.git
-
-poetry add xgboost
-
-poetry shell
-```
 
 # Preprocessing
 
