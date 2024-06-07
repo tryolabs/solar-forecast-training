@@ -1,4 +1,4 @@
-# solar-training-prediction
+# solar-forecast.-training
 
 This repository contains the tools needed to train a model for solar energy prediction. This work was a collaboration with [Open Collaboration Foundation (OCF)](https://github.com/openclimatefix/Open-Source-Quartz-Solar-Forecast/tree/main).
 
